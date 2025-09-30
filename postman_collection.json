@@ -1,0 +1,598 @@
+{
+  "info": {
+    "name": "Lavela Health Scheduling API",
+    "description": "API endpoints for the Rails backend scheduling application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "scheduling-api-collection",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0
+    }
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "provider_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "client_id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/up",
+          "host": ["{{base_url}}"],
+          "path": ["up"]
+        },
+        "description": "Check if the Rails application is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Availabilities",
+      "item": [
+        {
+          "name": "Get Provider Availabilities - Current Week",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/{{provider_id}}/availabilities?from=2025-09-29T00:00:00Z&to=2025-10-05T23:59:59Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "{{provider_id}}", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-09-29T00:00:00Z",
+                  "description": "Start of time range (ISO8601)"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-05T23:59:59Z",
+                  "description": "End of time range (ISO8601)"
+                }
+              ]
+            },
+            "description": "Get available time slots for a provider in the current week"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Availabilities - Next Week",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/{{provider_id}}/availabilities?from=2025-10-06T00:00:00Z&to=2025-10-12T23:59:59Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "{{provider_id}}", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-10-06T00:00:00Z"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-12T23:59:59Z"
+                }
+              ]
+            },
+            "description": "Get available time slots for a provider in the next week"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Availabilities - Single Day",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/{{provider_id}}/availabilities?from=2025-10-06T00:00:00Z&to=2025-10-06T23:59:59Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "{{provider_id}}", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-10-06T00:00:00Z"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-06T23:59:59Z"
+                }
+              ]
+            },
+            "description": "Get available time slots for a provider on a specific day"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Availabilities - Provider 2",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/2/availabilities?from=2025-10-07T00:00:00Z&to=2025-10-08T23:59:59Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "2", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-10-07T00:00:00Z"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-08T23:59:59Z"
+                }
+              ]
+            },
+            "description": "Get available time slots for provider 2"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Availabilities - Invalid Provider",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/999/availabilities?from=2025-10-06T00:00:00Z&to=2025-10-06T23:59:59Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "999", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-10-06T00:00:00Z"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-06T23:59:59Z"
+                }
+              ]
+            },
+            "description": "Test error handling for non-existent provider"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Availabilities - Missing Parameters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/{{provider_id}}/availabilities",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "{{provider_id}}", "availabilities"]
+            },
+            "description": "Test error handling for missing from/to parameters"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Create Appointment - Valid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": {{client_id}},\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T13:00:00Z\",\n  \"ends_at\": \"2025-10-06T13:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Create a valid appointment within an availability window"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - With Duration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": 2,\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T16:30:00Z\",\n  \"ends_at\": \"2025-10-06T17:00:00Z\",\n  \"duration_minutes\": 30\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Create appointment with explicit duration"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - Different Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": 3,\n  \"provider_id\": 2,\n  \"starts_at\": \"2025-10-08T13:00:00Z\",\n  \"ends_at\": \"2025-10-08T13:15:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Create appointment with different client and provider"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - Missing Parameters",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": {{client_id}},\n  \"starts_at\": \"2025-10-06T14:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Test error handling for missing required parameters"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - Invalid Time Range",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": {{client_id}},\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T14:00:00Z\",\n  \"ends_at\": \"2025-10-06T13:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Test error handling for end time before start time"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - Past Time",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": {{client_id}},\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-09-01T14:00:00Z\",\n  \"ends_at\": \"2025-09-01T14:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Test error handling for appointments in the past"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - No Availability Window",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": {{client_id}},\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T02:00:00Z\",\n  \"ends_at\": \"2025-10-06T02:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Test error handling when no availability window exists for the time"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - Conflicting Time",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": 2,\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T13:15:00Z\",\n  \"ends_at\": \"2025-10-06T13:45:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Test conflict detection with existing appointments (run after creating the first appointment)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment - Non-existent Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": 999,\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T15:00:00Z\",\n  \"ends_at\": \"2025-10-06T15:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Test error handling for non-existent client"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Appointment Cancellation",
+      "item": [
+        {
+          "name": "Cancel Appointment - Valid ID",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/appointments/1",
+              "host": ["{{base_url}}"],
+              "path": ["appointments", "1"]
+            },
+            "description": "Cancel an existing appointment (soft delete)"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Appointment - Non-existent ID",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/appointments/999",
+              "host": ["{{base_url}}"],
+              "path": ["appointments", "999"]
+            },
+            "description": "Test error handling for non-existent appointment"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Integration Tests",
+      "item": [
+        {
+          "name": "Full Workflow - Check Availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/{{provider_id}}/availabilities?from=2025-10-06T16:00:00Z&to=2025-10-06T18:00:00Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "{{provider_id}}", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-10-06T16:00:00Z"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-06T18:00:00Z"
+                }
+              ]
+            },
+            "description": "Step 1: Check availability for a specific time window"
+          },
+          "response": []
+        },
+        {
+          "name": "Full Workflow - Book Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": {{client_id}},\n  \"provider_id\": {{provider_id}},\n  \"starts_at\": \"2025-10-06T16:30:00Z\",\n  \"ends_at\": \"2025-10-06T17:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            },
+            "description": "Step 2: Book the appointment in the available slot"
+          },
+          "response": []
+        },
+        {
+          "name": "Full Workflow - Check Updated Availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/providers/{{provider_id}}/availabilities?from=2025-10-06T16:00:00Z&to=2025-10-06T18:00:00Z",
+              "host": ["{{base_url}}"],
+              "path": ["providers", "{{provider_id}}", "availabilities"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-10-06T16:00:00Z"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-10-06T18:00:00Z"
+                }
+              ]
+            },
+            "description": "Step 3: Verify availability is reduced after booking"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
