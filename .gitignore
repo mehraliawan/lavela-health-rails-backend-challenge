@@ -32,3 +32,5 @@
 /config/master.key
 # Local-only documentation
 private_readme.md
+
+/frontend
