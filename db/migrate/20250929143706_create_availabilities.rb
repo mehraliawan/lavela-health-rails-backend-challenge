@@ -9,8 +9,8 @@ class CreateAvailabilities < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
-    add_index :availabilities, [:provider_id, :starts_at, :ends_at]
+
+    add_index :availabilities, [ :provider_id, :starts_at, :ends_at ]
     add_index :availabilities, :external_id, unique: true
   end
 end
